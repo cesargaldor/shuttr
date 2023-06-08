@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "vercel": "prisma generate && prisma migrate deploy && next build"
+    "vercel": "prisma generate && prisma migrate deploy && next build",
+    "planetscale": "prisma db push && next build"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.1.0",
