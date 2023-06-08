@@ -3,33 +3,33 @@ import type { NextRequest } from "next/server";
 import { BASE_URL } from "./constants";
 
 export default async function middleware(request: NextRequest) {
-  const hostname = request?.headers?.get("host") as string;
+  //const hostname = request?.headers?.get("host") as string;
 
   // This is for multitenancy
-  if (hostname?.split(".")?.length > 1) {
-    const subdomain = hostname?.split(".") as string[];
-    //TODO: Check if user exist, if not, redirect to homepage
-    // TODO: As prisma does not work on server, it should be an api request and get user from there
+  // if (hostname?.split(".")?.length > 1) {
+  //   const subdomain = hostname?.split(".") as string[];
+  //   //TODO: Check if user exist, if not, redirect to homepage
+  //   // TODO: As prisma does not work on server, it should be an api request and get user from there
 
-    const userExists = await fetch(`${request.url}/api/users/${subdomain[0]}`)
-      .then((res) => {
-        return res.status === 200
-          ? res.json()
-          : new Error(
-              JSON.stringify({
-                status: res.status,
-                body: res.text(),
-              })
-            );
-      })
-      .then((data) => data)
-      .catch(() => NextResponse.redirect(BASE_URL));
+  //   const userExists = await fetch(`${request.url}/api/users/${subdomain[0]}`)
+  //     .then((res) => {
+  //       return res.status === 200
+  //         ? res.json()
+  //         : new Error(
+  //             JSON.stringify({
+  //               status: res.status,
+  //               body: res.text(),
+  //             })
+  //           );
+  //     })
+  //     .then((data) => data)
+  //     .catch(() => NextResponse.redirect(BASE_URL));
 
-    if (userExists && Object.keys(userExists).length > 0) {
-      const finalUrl = `${request.url}p/${subdomain[0]}`;
-      return NextResponse.rewrite(finalUrl);
-    }
-  }
+  //   if (userExists && Object.keys(userExists).length > 0) {
+  //     const finalUrl = `${request.url}p/${subdomain[0]}`;
+  //     return NextResponse.rewrite(finalUrl);
+  //   }
+  // }
 
   return NextResponse.next();
 }
