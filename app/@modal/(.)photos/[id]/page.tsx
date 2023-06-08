@@ -15,7 +15,7 @@ export default function PhotoDetail({ params }: Params) {
       {/* <Photo photo={photo} /> */}
 
       <img
-        className="block rounded-lg object-fit w-full h-auto"
+        className="block rounded-lg object-fit w-full h-full md:h-auto"
         src={photo?.imageSrc}
         alt="alt"
       />

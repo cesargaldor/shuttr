@@ -6,7 +6,7 @@ import Link from "next/link";
 const Masonry = () => {
   // https://source.unsplash.com/random/?city,night
   return (
-    <div className="columns-3 gap-4">
+    <div className="columns-2 md:columns-3 gap-4">
       {photos.map((p) => {
         return (
           <Link

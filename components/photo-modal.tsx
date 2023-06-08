@@ -45,7 +45,7 @@ const PhotoModal: FC<Props> = ({ children }) => {
       onClick={onClick}>
       <div
         ref={wrapper}
-        className="fixed z-40 inset-10 overflow-y-scroll rounded-md">
+        className="fixed z-40 inset-5 md:inset-5 overflow-y-scroll rounded-md">
         <div className="bg-white w-full">
           <div className="flex w-full justify-end p-12">
             <X
@@ -54,10 +54,10 @@ const PhotoModal: FC<Props> = ({ children }) => {
             />
           </div>
           <div className="flex flex-col items-center">
-            <div className="w-4/12 rounded-md">{children}</div>
+            <div className="w-10/12 md:w-4/12 rounded-md">{children}</div>
             <div className="w-full bg-neutral-50 mt-12">
-              <div className="w-5/12 mx-auto grid grid-cols-3 p-12 gap-4">
-                <div className="pl-6">
+              <div className="w-full md:w-5/12 mx-auto grid grid-cols-2 md:grid-cols-3 p-6 md:p-12 gap-4">
+                <div className="md:pl-6">
                   <p className="mb-2 text-lg font-zilla">Uploaded by</p>
                   <div className="flex items-center gap-2">
                     <Avatar className="w-6 h-6">
@@ -73,7 +73,7 @@ const PhotoModal: FC<Props> = ({ children }) => {
                   <span>Sevilla, España</span>
                 </div>
 
-                <div className="pl-6">
+                <div className="md:pl-6 mt-4 md:mt-0">
                   <p className="mb-2 text-lg font-zilla">Published</p>
                   <span>{new Date().toLocaleDateString()}</span>
                 </div>
@@ -83,7 +83,7 @@ const PhotoModal: FC<Props> = ({ children }) => {
                   <span>F12 - 1/400s - ISO 160</span>
                 </div>
 
-                <div className="mt-4 pl-6">
+                <div className="mt-4 md:pl-6">
                   <p className="mb-2 text-lg font-zilla">Camera</p>
                   <span>Sony A6100</span>
                 </div>
