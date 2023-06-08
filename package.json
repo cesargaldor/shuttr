@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "vercel": "prisma generate && prisma migrate deploy && next build"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.1.0",
@@ -39,5 +40,8 @@
     "tailwindcss-animate": "^1.0.5",
     "typescript": "5.1.3",
     "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "prisma": "^4.15.0"
   }
 }
