@@ -6,7 +6,7 @@ import { Button } from "./ui/button";
 
 const Footer = () => {
   return (
-    <footer className="py-8 mt-12">
+    <footer className="py-8 mt-16">
       <div className="flex flex-col md:flex-row">
         <div className="w-3/5">
           <div className="font-zilla text-2xl flex items-center gap-1">
@@ -18,10 +18,13 @@ const Footer = () => {
           </div>
         </div>
         <div className="w-2/5">
-          <p>Join our newsletter</p>
-          <div className="flex items-center">
-            <Input placeholder="Enter your email" />
-            <Button> Subscribe</Button>
+          <p className="text-sm">Join our newsletter</p>
+          <div className="flex items-center gap-4 mt-2">
+            <Input
+              placeholder="Enter your email"
+              className="bg-white"
+            />
+            <Button>Subscribe</Button>
           </div>
         </div>
       </div>
