@@ -51,6 +51,11 @@ model User {
   password       String?
   posts          Post[]
   location       String?
+  bio            String?
+  instagram      String?
+  website        String?
+  focal          String?
+  camera         String?
   subscriptionId String?
   createdAt      DateTime  @default(now())
 }

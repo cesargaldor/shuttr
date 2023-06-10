@@ -80,7 +80,7 @@ const Navbar: FC<Props> = ({ user }) => {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Button>
+            <Button className="-ml-1">
               <Link href={`${BASE_URL}/login`}>Sign in</Link>
             </Button>
           )}

@@ -4,6 +4,7 @@ import { Manrope, Zilla_Slab } from "next/font/google";
 import { getCurrentUser } from "@/services/user";
 import Footer from "@/components/footer";
 import Container from "@/components/container";
+import { Toaster } from "@/components/ui/toaster";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
 
@@ -33,6 +34,7 @@ export default async function RootLayout(props: any) {
             <Footer />
           </Container>
         </div>
+        <Toaster />
       </body>
     </html>
   );
