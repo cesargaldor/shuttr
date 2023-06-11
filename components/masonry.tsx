@@ -1,13 +1,46 @@
-import Image from "next/image";
-import RatioNextImage from "./ratio-image";
-import { photos } from "@/mock/images";
+import { photos as MockPhotos } from "@/mock/images";
 import Link from "next/link";
+import { FC } from "react";
 
-const Masonry = () => {
-  // https://source.unsplash.com/random/?city,night
+interface Props {
+  photos?: any[] | null;
+}
+
+const Masonry: FC<Props> = ({ photos }) => {
+  if (photos) {
+    return (
+      <div className="columns-2 md:columns-3 gap-4">
+        {photos.map((p) => {
+          return (
+            <Link
+              key={p.id}
+              href={`/photos/${p.id}`}>
+              <img
+                className="h-auto max-w-full rounded-lg mb-4 relative"
+                src={p.image}
+                alt={p.title}
+                loading="lazy"
+              />
+
+              {/* <div
+                style={{ backgroundImage: `url(${p.image})` }}
+                className="bg-cover bg-no-repeat bg-center relative max-w-full h-[864px] rounded-md">
+                <div className="absolute bottom-5 left-5 text-xl text-white font-semibold">
+                  <p>ISO 100</p>
+                  <p>F/7.1</p>
+                  <p>1/800s</p>
+                </div>
+              </div> */}
+            </Link>
+          );
+        })}
+      </div>
+    );
+  }
+
   return (
     <div className="columns-2 md:columns-3 gap-4">
-      {photos.map((p) => {
+      {MockPhotos.map((p) => {
         return (
           <Link
             key={p.id}
@@ -21,76 +54,6 @@ const Masonry = () => {
           </Link>
         );
       })}
-      {/* <div className="w-full h-full relative">
-          <RatioNextImage
-            src="https://source.unsplash.com/user/wsanter"
-            alt="photo"
-          />
-        </div> */}
-
-      {/* <RatioNextImage
-          src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-1.jpg"
-          alt="photo"
-        />
-
-        <RatioNextImage
-          src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-2.jpg"
-          alt="photo"
-        /> */}
-
-      {/* <img
-        className="h-auto max-w-full rounded-lg mb-4"
-        src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-3.jpg"
-        alt=""
-      />
-
-      <img
-        className="h-auto max-w-full rounded-lg mb-4"
-        src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-4.jpg"
-        alt=""
-      />
-
-      <img
-        className="h-auto max-w-full rounded-lg mb-4"
-        src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-5.jpg"
-        alt=""
-      />
-
-      <img
-        className="h-auto max-w-full rounded-lg mb-4"
-        src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-6.jpg"
-        alt=""
-      />
-
-      <img
-        className="h-auto max-w-full rounded-lg mb-4"
-        src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-7.jpg"
-        alt=""
-      />
-
-      <img
-        className="h-auto max-w-full rounded-lg mb-4"
-        src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-8.jpg"
-        alt=""
-      />
-
-      <img
-        className="h-auto max-w-full rounded-lg mb-4"
-        src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-9.jpg"
-        alt=""
-      />
-
-      <img
-        className="h-auto max-w-full rounded-lg mb-4"
-        src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-10.jpg"
-        alt=""
-      />
-
-      <img
-        className="h-auto max-w-full rounded-lg mb-4"
-        src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-11.jpg"
-        alt=""
-      /> */}
     </div>
   );
 };

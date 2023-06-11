@@ -72,7 +72,7 @@ const FileDrop: FC<Props> = ({ user }) => {
       // Check photometadata
       //const exifData = await getExifMetadata(cloudinaryData?.public_id);
 
-      await fetch(`api/post/upload`, {
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/post/upload`, {
         method: "POST",
         body: JSON.stringify({
           image: cloudinaryData?.secure_url,

@@ -31,7 +31,7 @@ const ProfileForm: FC<Props> = ({ user }) => {
 
   const handleProfile = (data: IFormData) => {
     setIsLoading(true);
-    fetch("api/users/profile", {
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users/profile`, {
       method: "POST",
       body: JSON.stringify(data),
     })

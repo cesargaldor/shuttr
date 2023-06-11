@@ -12,3 +12,17 @@ export async function uploadCloudinaryImage(imageData: FormData) {
 export async function getExifMetadata(publicId: string) {
   return await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME}/resources/image/upload/${publicId}?media_metadata=1`).then((res) => res.json());
 }
+
+export async function getUserPhotos(userId: string) {
+  try {
+    const posts = await prisma?.post.findMany({
+      where: {
+        userId,
+      },
+    });
+
+    return posts;
+  } catch (e) {
+    return null;
+  }
+}
