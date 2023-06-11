@@ -1,3 +1,5 @@
+import prisma from "@/lib/prisma";
+
 export async function uploadCloudinaryImage(imageData: FormData) {
   return await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME}/upload`, {
     method: "POST",
