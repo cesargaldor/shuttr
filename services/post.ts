@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+//import prisma from "@/lib/prisma";
 
 export async function uploadCloudinaryImage(imageData: FormData) {
   return await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUDNAME}/upload`, {
@@ -16,15 +16,5 @@ export async function getExifMetadata(publicId: string) {
 }
 
 export async function getUserPhotos(userId: string) {
-  try {
-    const posts = await prisma?.post.findMany({
-      where: {
-        userId,
-      },
-    });
-
-    return posts;
-  } catch (e) {
-    return null;
-  }
+  return await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/post/user/${userId}`).then((res) => res.json());
 }

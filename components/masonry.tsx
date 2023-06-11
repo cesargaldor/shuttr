@@ -10,7 +10,7 @@ const Masonry: FC<Props> = ({ photos }) => {
   if (photos) {
     return (
       <div className="columns-2 md:columns-3 gap-4">
-        {photos.map((p) => {
+        {photos?.map((p) => {
           return (
             <Link
               key={p.id}
