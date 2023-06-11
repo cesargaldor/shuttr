@@ -1,6 +1,7 @@
 import { getCurrentUser } from "@/services/user";
 import { User } from "@prisma/client";
 import { NextResponse } from "next/server";
+import prisma from "@/lib/prisma";
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -16,7 +17,6 @@ export async function POST(request: Request) {
 
     return NextResponse.json(updatedUser);
   } catch (error) {
-    console.log("ERROR", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
