@@ -69,6 +69,9 @@ const Navbar: FC<Props> = ({ user }) => {
                 <DropdownMenuItem>
                   <Link href="/dashboard">Dashboard</Link>
                 </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href={`/p/${user?.email?.split("@")[0]}`}>Profile</Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() =>
                     signOut({
