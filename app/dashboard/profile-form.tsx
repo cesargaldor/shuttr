@@ -6,12 +6,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { User } from "@prisma/client";
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 interface Props {
-  user: any;
+  user: User;
 }
 
 interface IFormData {
@@ -45,7 +46,7 @@ const ProfileForm: FC<Props> = ({ user }) => {
       .catch(() => {
         toast({
           variant: "destructive",
-          title: "Uh oh! Something went wrong.",
+          title: "Oh! Something went wrong.",
           description: "There was a problem with your request.",
         });
       })
@@ -90,7 +91,7 @@ const ProfileForm: FC<Props> = ({ user }) => {
         className="w-full">
         <div className="w-fit">
           <Avatar className="w-20 h-20">
-            <AvatarImage src={user?.image} />
+            <AvatarImage src={user?.image as string} />
             <AvatarFallback>{user?.name?.slice(0, 2)}</AvatarFallback>
           </Avatar>
         </div>

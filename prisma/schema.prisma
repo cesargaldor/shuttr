@@ -63,7 +63,7 @@ model User {
 model Post {
   id          String     @id @default(cuid())
   title       String
-  description String
+  description String?
   image       String
   camera      String?
   location    String?

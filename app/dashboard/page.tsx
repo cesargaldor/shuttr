@@ -1,10 +1,11 @@
+import { getCurrentUser } from "@/services/user";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProfileForm from "./profile-form";
 import FileDrop from "./file-drop";
-import { getCurrentUser } from "@/services/user";
+import { User } from "@prisma/client";
 
 const Dashboard = async () => {
-  const user = await getCurrentUser();
+  const user = (await getCurrentUser()) as User;
 
   return (
     <div>
@@ -20,7 +21,7 @@ const Dashboard = async () => {
           <ProfileForm user={user} />
         </TabsContent>
         <TabsContent value="upload">
-          <FileDrop />
+          <FileDrop user={user} />
         </TabsContent>
       </Tabs>
     </div>
