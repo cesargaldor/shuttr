@@ -11,7 +11,7 @@ const UserGallery: FC<Props> = async ({ user }) => {
   const photos = await getUserPhotos(user?.id);
 
   return (
-    <div className="mt-6">
+    <div className="mt-6 min-h-[65vh]">
       <Masonry photos={photos} />
     </div>
   );

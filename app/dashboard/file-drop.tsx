@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { handleFileUploadErrors } from "@/utils/errors";
+import { useTheme } from "next-themes";
 import { getExifMetadata, uploadCloudinaryImage } from "@/services/post";
 import { useRouter } from "next/navigation";
 import { User } from "@prisma/client";
@@ -23,22 +24,6 @@ interface IFormData {
 interface Props {
   user: User;
 }
-
-const baseStyle = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  padding: "20px",
-  borderWidth: 2,
-  borderRadius: 6,
-  borderColor: "#eeeeee",
-  borderStyle: "dashed",
-  backgroundColor: "#fff",
-  color: "#65758b",
-  outline: "none",
-  transition: "border .24s ease-in-out",
-  height: "68vh",
-};
 
 const acceptStyle = {
   borderColor: "#00e676",
@@ -53,6 +38,25 @@ const rejectStyle = {
 const FileDrop: FC<Props> = ({ user }) => {
   const { toast } = useToast();
   const router = useRouter();
+  const { theme } = useTheme();
+
+  const baseStyle = useMemo(() => {
+    return {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "20px",
+      borderWidth: 2,
+      borderRadius: 6,
+      borderColor: theme === "light" ? "#eeeeee" : "#0f1629",
+      borderStyle: "dashed",
+      backgroundColor: theme === "light" ? "#fff" : "#030711",
+      color: "#65758b",
+      outline: "none",
+      transition: "border .24s ease-in-out",
+      height: "68vh",
+    };
+  }, [theme]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [imageData, setImageData] = useState<FormData>();
@@ -87,7 +91,7 @@ const FileDrop: FC<Props> = ({ user }) => {
             description: "Your photo has been uploaded succesfully.",
           });
 
-          return router.replace(`/p/${user?.email?.split("@")[0]}`);
+          return router.replace(`/p/${user?.username}`);
         })
         .catch((error) => {
           toast({
@@ -135,7 +139,7 @@ const FileDrop: FC<Props> = ({ user }) => {
       ...(isDragAccept ? acceptStyle : {}),
       ...(isDragReject ? rejectStyle : {}),
     }),
-    [isFocused, isDragAccept, isDragReject]
+    [isFocused, isDragAccept, isDragReject, theme]
   );
 
   const validationSchema = z.object({

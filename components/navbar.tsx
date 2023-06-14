@@ -16,7 +16,7 @@ interface Props {
 
 const Navbar: FC<Props> = ({ user }) => {
   return (
-    <nav className="w-full h-20 bg-white flex items-center">
+    <nav className="w-full h-20 flex items-center">
       <div className="flex items-center justify-between w-full max-w-[90%] md:max-w-[70%] mx-auto">
         <Link href={BASE_URL}>
           <div className="font-zilla text-2xl flex items-center gap-1">
@@ -70,7 +70,7 @@ const Navbar: FC<Props> = ({ user }) => {
                   <Link href="/dashboard">Dashboard</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Link href={`/p/${user?.email?.split("@")[0]}`}>Profile</Link>
+                  <Link href={`/p/${user?.username}`}>Profile</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() =>

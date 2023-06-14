@@ -1,5 +1,6 @@
 "use client";
 import ErrorMessage from "@/components/error-message";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,6 +8,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@prisma/client";
+import { AlertCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -16,7 +19,7 @@ interface Props {
 }
 
 interface IFormData {
-  name: string;
+  username: string;
   website: string;
   location: string;
   instagram: string;
@@ -28,6 +31,7 @@ interface IFormData {
 const ProfileForm: FC<Props> = ({ user }) => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   const handleProfile = (data: IFormData) => {
     setIsLoading(true);
@@ -35,28 +39,31 @@ const ProfileForm: FC<Props> = ({ user }) => {
       method: "POST",
       body: JSON.stringify(data),
     })
-      .then((res) => {
-        if (!res.ok) throw new Error("Something went wrong");
-
+      .then(async (res) => {
+        if (!res.ok) {
+          const { error } = await res.json();
+          throw new Error(error);
+        }
         toast({
           title: "Success!",
           description: "Your profile has been updated succesfully.",
         });
       })
-      .catch(() => {
+      .catch((error) => {
         toast({
           variant: "destructive",
           title: "Oh! Something went wrong.",
-          description: "There was a problem with your request.",
+          description: error.message,
         });
       })
       .finally(() => {
         setIsLoading(false);
+        router.refresh();
       });
   };
 
   const validationSchema = z.object({
-    name: z.string(),
+    username: z.string(),
     website: z.string(),
     location: z.string(),
     instagram: z.string().max(25, { message: "Instagram account too long" }),
@@ -73,7 +80,7 @@ const ProfileForm: FC<Props> = ({ user }) => {
     formState: { errors, isDirty },
   } = useForm<ValidationSchema>({
     defaultValues: {
-      name: user?.name ?? "",
+      username: user?.username ?? "",
       location: user?.location ?? "",
       instagram: user?.instagram ?? "",
       camera: user?.camera ?? "",
@@ -85,26 +92,35 @@ const ProfileForm: FC<Props> = ({ user }) => {
   });
 
   return (
-    <div className="w-full mt-6 border border-slate-100 rounded-md p-6">
+    <div className="w-full mt-6 border-2 border-slate-100 dark:border-muted rounded-md p-6">
       <form
         onSubmit={handleSubmit(handleProfile)}
         className="w-full">
+        {!user?.username && (
+          <Alert className="border border-orange-300 mb-6">
+            <AlertCircle
+              className="h-4 w-4"
+              color="#fdba74"
+            />
+            <AlertTitle className="text-orange-300">Warning</AlertTitle>
+            <AlertDescription className="text-orange-300">You should add an username. Otherwise you won't have a profile.</AlertDescription>
+          </Alert>
+        )}
         <div className="w-fit">
           <Avatar className="w-20 h-20">
             <AvatarImage src={user?.image as string} />
-            <AvatarFallback>{user?.name?.slice(0, 2)}</AvatarFallback>
+            <AvatarFallback>{user?.username?.slice(0, 2)}</AvatarFallback>
           </Avatar>
         </div>
         <div className="w-full mt-4 flex flex-col md:grid md:grid-cols-2 gap-4">
           <div className="flex flex-col">
-            <label className="text-sm mb-2">Name *</label>
+            <label className="text-sm mb-2">Username *</label>
             <Input
-              disabled
-              className="mb-4  p-2 rounded-lg"
-              {...register("name")}
+              className="mb-4 p-2 rounded-lg"
+              {...register("username")}
             />
 
-            {errors.name && <ErrorMessage message={errors.name.message as string} />}
+            {errors.username && <ErrorMessage message={errors.username.message as string} />}
           </div>
 
           <div className="flex flex-col">
@@ -159,7 +175,7 @@ const ProfileForm: FC<Props> = ({ user }) => {
         <Button
           className="mt-4"
           disabled={!isDirty}>
-          {isLoading && <div className="border-t-transparent border-solid animate-spin rounded-full border-white border-2 h-4 w-4 mr-2"></div>} Save changes
+          {isLoading && <div className="border-t-transparent border-solid animate-spin rounded-full border-white dark:border-muted-foreground border-2 h-4 w-4 mr-2"></div>} Save changes
         </Button>
       </form>
     </div>

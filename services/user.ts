@@ -22,9 +22,7 @@ export async function getCurrentUser() {
 export async function getUserProfile(username: string) {
   const user = await prisma.user.findFirst({
     where: {
-      email: {
-        contains: username,
-      },
+      username,
     },
     include: {
       posts: true,
