@@ -9,7 +9,11 @@ interface Props {
 const Providers: FC<Props> = ({ children }) => {
   return (
     <>
-      <ThemeProvider attribute="class">{children}</ThemeProvider>
+      <ThemeProvider
+        attribute="class"
+        enableSystem={false}>
+        {children}
+      </ThemeProvider>
     </>
   );
 };

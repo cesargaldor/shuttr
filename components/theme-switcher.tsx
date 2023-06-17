@@ -17,7 +17,7 @@ const ThemeSwitcher = () => {
   const [mounted, setMounted] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const { theme, setTheme } = useTheme();
-  const [value, setValue] = useState<string>(theme as string);
+  const [value, setValue] = useState<string>((theme as string) ?? themes[0].value);
 
   // useEffect only runs on the client, so now we can safely show the UI
   useEffect(() => {
