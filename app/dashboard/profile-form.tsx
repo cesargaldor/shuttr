@@ -4,6 +4,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Spinner from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -100,10 +101,10 @@ const ProfileForm: FC<Props> = ({ user }) => {
           <Alert className="border border-orange-300 mb-6">
             <AlertCircle
               className="h-4 w-4"
-              color="#fdba74"
+              color="#f97316"
             />
-            <AlertTitle className="text-orange-300">Warning</AlertTitle>
-            <AlertDescription className="text-orange-300">You should add an username. Otherwise you won't have a profile.</AlertDescription>
+            <AlertTitle className="text-orange-500">Warning</AlertTitle>
+            <AlertDescription className="text-orange-500">You should add an username. Otherwise you won't have a profile.</AlertDescription>
           </Alert>
         )}
         <div className="w-fit">
@@ -175,7 +176,7 @@ const ProfileForm: FC<Props> = ({ user }) => {
         <Button
           className="mt-4"
           disabled={!isDirty}>
-          {isLoading && <div className="border-t-transparent border-solid animate-spin rounded-full border-white dark:border-muted-foreground border-2 h-4 w-4 mr-2"></div>} Save changes
+          {isLoading && <Spinner />} Save changes
         </Button>
       </form>
     </div>

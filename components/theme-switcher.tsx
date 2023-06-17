@@ -52,7 +52,7 @@ const ThemeSwitcher = () => {
               <CommandGroup className="text-xs">
                 {themes.map((theme) => (
                   <CommandItem
-                    className="text-xs"
+                    className="text-xs hover:bg-transparent active:bg-transparent"
                     key={theme.value}
                     onSelect={(currentValue) => {
                       const theme = themes.find((t) => t.label.toLowerCase() === currentValue);

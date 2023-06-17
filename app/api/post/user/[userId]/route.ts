@@ -1,13 +1,25 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-export async function GET(request: Request, { params }: { params: { userId: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { userId: string } }) {
   try {
-    const posts = await prisma?.post.findMany({
-      where: {
-        userId: params.userId,
-      },
-    });
+    let posts;
+    const albumId: string | null = request.nextUrl.searchParams.get("album");
+
+    if (albumId) {
+      posts = await prisma?.post.findMany({
+        where: {
+          userId: params.userId,
+          albumId,
+        },
+      });
+    } else {
+      posts = await prisma?.post.findMany({
+        where: {
+          userId: params.userId,
+        },
+      });
+    }
 
     return NextResponse.json(posts);
   } catch (e) {

@@ -59,6 +59,17 @@ model User {
   camera         String?
   subscriptionId String?
   createdAt      DateTime  @default(now())
+  albums         Album[]
+}
+
+model Album {
+  id     String @id @default(cuid())
+  title  String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+  images Post[]
+
+  @@index([userId])
 }
 
 model Post {
@@ -73,9 +84,12 @@ model Post {
   aperture    String?
   user        User       @relation(fields: [userId], references: [id])
   userId      String
+  album       Album?     @relation(fields: [albumId], references: [id])
+  albumId     String?
   categories  Category[]
 
   @@index([userId])
+  @@index([albumId])
 }
 
 model Category {

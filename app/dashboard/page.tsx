@@ -5,7 +5,7 @@ import FileDrop from "./file-drop";
 import { User } from "@prisma/client";
 import UserGallery from "./user-gallery";
 
-const Dashboard = async () => {
+const Dashboard = async ({ searchParams }: { searchParams?: { [key: string]: string | string[] | undefined } }) => {
   const user = (await getCurrentUser()) as User;
 
   return (
@@ -22,7 +22,10 @@ const Dashboard = async () => {
           <ProfileForm user={user} />
         </TabsContent>
         <TabsContent value="photos">
-          <UserGallery user={user} />
+          <UserGallery
+            user={user}
+            albumId={searchParams?.album as string}
+          />
         </TabsContent>
         <TabsContent value="upload">
           <FileDrop user={user} />
