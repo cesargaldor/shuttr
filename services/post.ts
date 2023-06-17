@@ -21,3 +21,7 @@ export async function getUserPhotos(userId: string, albumId: string | undefined 
   }
   return await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/post/user/${userId}`).then((res) => res.json());
 }
+
+export async function getPhotoById(postId: string) {
+  return await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/post/${postId}`).then((res) => res.json());
+}

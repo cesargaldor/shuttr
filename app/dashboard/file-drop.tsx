@@ -11,7 +11,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { handleFileUploadErrors } from "@/utils/errors";
-import { useTheme } from "next-themes";
 import { getExifMetadata, uploadCloudinaryImage } from "@/services/post";
 import { useRouter } from "next/navigation";
 import { User } from "@prisma/client";
@@ -25,39 +24,9 @@ interface Props {
   user: User;
 }
 
-const acceptStyle = {
-  borderColor: "#00e676",
-  backgroundColor: "#f1f5f9",
-};
-
-const rejectStyle = {
-  borderColor: "#ff1744",
-  backgroundColor: "#f1f5f9",
-};
-
 const FileDrop: FC<Props> = ({ user }) => {
   const { toast } = useToast();
   const router = useRouter();
-  const { theme } = useTheme();
-
-  const baseStyle = useMemo(() => {
-    return {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: "20px",
-      borderWidth: 2,
-      borderRadius: 6,
-      borderColor: theme === "light" ? "#eeeeee" : "#0f1629",
-      borderStyle: "dashed",
-      backgroundColor: theme === "light" ? "#fff" : "#030711",
-      color: "#65758b",
-      outline: "none",
-      transition: "border .24s ease-in-out",
-      height: "68vh",
-    };
-  }, [theme]);
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [imageData, setImageData] = useState<FormData>();
   const [photo, setPhoto] = useState<{ preview?: string }>({});
@@ -104,7 +73,7 @@ const FileDrop: FC<Props> = ({ user }) => {
     setIsLoading(false);
   };
 
-  const { getRootProps, getInputProps, isFocused, isDragAccept, isDragReject, open } = useDropzone({
+  const { getRootProps, getInputProps, isDragAccept, isDragReject, open } = useDropzone({
     accept: {
       "image/png": [],
       "image/jpg": [],
@@ -132,15 +101,6 @@ const FileDrop: FC<Props> = ({ user }) => {
       }
     },
   });
-
-  const style = useMemo(
-    () => ({
-      ...baseStyle,
-      ...(isDragAccept ? acceptStyle : {}),
-      ...(isDragReject ? rejectStyle : {}),
-    }),
-    [isFocused, isDragAccept, isDragReject, theme]
-  );
 
   const validationSchema = z.object({
     title: z.string().min(1, { message: "Title is required" }).max(30, { message: "Title is too long" }),
@@ -174,7 +134,11 @@ const FileDrop: FC<Props> = ({ user }) => {
   return (
     <div className="mt-6">
       {Object.keys(photo).length === 0 ? (
-        <div {...getRootProps({ style })}>
+        <div
+          {...getRootProps()}
+          className={`text-center flex outline-none transition-all duration-100 items-center justify-center p-5 border-2 border-dashed rounded-md bg-muted border-color-muted-foreground h-[75vh] md:h-[65vh] text-slate-500 ${
+            isDragAccept && "border-green-500"
+          } ${isDragReject && "border-red-500"}`}>
           <input {...getInputProps()} />
           <p>Drag and drop a photo here, or click to select file</p>
         </div>
@@ -269,7 +233,8 @@ const FileDrop: FC<Props> = ({ user }) => {
                 <Button
                   onClick={(e) => {
                     e.preventDefault();
-                    open();
+                    setPhoto({});
+                    setImageData(new FormData());
                   }}
                   variant="secondary"
                   className="mr-3">

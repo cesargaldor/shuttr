@@ -3,12 +3,14 @@ import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FC, useCallback, useEffect, useRef } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { ExtendedPost } from "@/types/ExtendedPost";
 
 interface Props {
   children: JSX.Element;
+  post: ExtendedPost;
 }
 
-const PhotoModal: FC<Props> = ({ children }) => {
+const PhotoModal: FC<Props> = ({ children, post }) => {
   const overlay = useRef<HTMLDivElement>(null);
   const wrapper = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -61,36 +63,40 @@ const PhotoModal: FC<Props> = ({ children }) => {
                   <p className="mb-2 text-lg font-zilla">Uploaded by</p>
                   <div className="flex items-center gap-2">
                     <Avatar className="w-6 h-6">
-                      <AvatarImage src="https://github.com/shadcn.png" />
-                      <AvatarFallback>CN</AvatarFallback>
+                      <AvatarImage src={post?.user?.image as string} />
+                      <AvatarFallback>{post?.user.name?.slice(2)}</AvatarFallback>
                     </Avatar>
-                    <span>César Gálvez</span>
+                    <span>{post.user.name}</span>
                   </div>
                 </div>
 
                 <div className="pl-6">
                   <p className="mb-2 text-lg font-zilla">Location</p>
-                  <span>Sevilla, España</span>
+                  <span>{post?.location}</span>
                 </div>
 
                 <div className="md:pl-6 mt-4 md:mt-0">
                   <p className="mb-2 text-lg font-zilla">Published</p>
-                  <span>{new Date().toLocaleDateString()}</span>
+                  <span>{new Date(post.createdAt).toLocaleDateString()}</span>
                 </div>
 
                 <div className="mt-4 pl-6">
                   <p className="mb-2 text-lg font-zilla">EXIF</p>
-                  <span>F12 - 1/400s - ISO 160</span>
+                  <span>
+                    {!post.aperture && !post.shutter && !post.iso && "-----"}
+                    {`${post?.aperture ?? ""} - `}
+                    {`${post?.shutter ?? ""} - `} ISO {post.iso}
+                  </span>
                 </div>
 
                 <div className="mt-4 md:pl-6">
                   <p className="mb-2 text-lg font-zilla">Camera</p>
-                  <span>Sony A6100</span>
+                  <span>{post.camera ?? "-----"}</span>
                 </div>
 
                 <div className="mt-4 pl-6">
                   <p className="mb-2 text-lg font-zilla">Focal length</p>
-                  <span>30mm</span>
+                  <span>{post.focal}</span>
                 </div>
               </div>
             </div>

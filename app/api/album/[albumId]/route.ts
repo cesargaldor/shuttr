@@ -14,6 +14,15 @@ export async function DELETE(request: NextRequest, { params }: { params: { album
     });
 
     if (!!album && album?.userId === currentUser?.id) {
+      await prisma.post.updateMany({
+        where: {
+          albumId: params.albumId,
+        },
+        data: {
+          albumId: null,
+        },
+      });
+
       await prisma.album.delete({
         where: {
           id: params.albumId,

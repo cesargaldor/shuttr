@@ -67,7 +67,7 @@ const AlbumSlider: FC<Props> = ({ albums }) => {
   return (
     <div className="my-10">
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-semibold">{selectedAlbum}</h2>
+        <h2 className="text-xl md:text-3xl font-semibold">{selectedAlbum}</h2>
         <CreateAlbumModal />
       </div>
       <div className="flex gap-4 mt-6">

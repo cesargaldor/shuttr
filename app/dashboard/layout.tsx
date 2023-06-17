@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Shuttr - Dashboard",
+  title: "Dashboard - Shuttr",
 };
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {

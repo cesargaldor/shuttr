@@ -79,14 +79,16 @@ model Post {
   image       String
   camera      String?
   location    String?
-  shutter     String?
-  iso         String?
-  aperture    String?
+  shutter     Float?
+  iso         Int?
+  aperture    Float?
+  focal       Int?
   user        User       @relation(fields: [userId], references: [id])
   userId      String
   album       Album?     @relation(fields: [albumId], references: [id])
   albumId     String?
   categories  Category[]
+  createdAt   DateTime   @default(now())
 
   @@index([userId])
   @@index([albumId])

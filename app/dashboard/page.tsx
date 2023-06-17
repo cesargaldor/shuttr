@@ -7,11 +7,12 @@ import UserGallery from "./user-gallery";
 
 const Dashboard = async ({ searchParams }: { searchParams?: { [key: string]: string | string[] | undefined } }) => {
   const user = (await getCurrentUser()) as User;
+  const activeTab = searchParams?.active;
 
   return (
     <div>
       <Tabs
-        defaultValue="profile"
+        defaultValue={(activeTab as string) ?? "profile"}
         className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="profile">Profile</TabsTrigger>

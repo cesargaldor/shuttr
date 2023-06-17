@@ -78,8 +78,8 @@ const CreateAlbumModal: FC<Props> = () => {
         <Button
           onClick={() => setOpen(true)}
           variant="outline"
-          className="w-fit rounded-lg">
-          <PlusIcon className="h-4 w-4" />
+          className="w-fit rounded-lg text-xs md:text-sm">
+          <PlusIcon className="h-3 w-3 md:h-4 md:w-4" />
           <p className="ml-1">Add new album</p>
         </Button>
       </AlertDialogTrigger>
@@ -103,6 +103,7 @@ const CreateAlbumModal: FC<Props> = () => {
             <AlertDialogCancel onClick={() => setOpen(false)}>Cancel</AlertDialogCancel>
             <AlertDialogAction asChild>
               <Button
+                className="mt-2 md:mt-0"
                 disabled={!isDirty}
                 type="submit">
                 {isLoading && <Spinner />}
